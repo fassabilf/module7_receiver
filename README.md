@@ -59,14 +59,14 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   Open another new terminal, edit `ROCKET_PORT` in `.env` to `8003`, then execute `cargo run`.
 
 ## Mandatory Checklists (Subscriber)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
+-   [X] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
 -   **STAGE 1: Implement models and repositories**
-    -   [ ] Commit: `Create Notification model struct.`
-    -   [ ] Commit: `Create SubscriberRequest model struct.`
-    -   [ ] Commit: `Create Notification database and Notification repository struct skeleton.`
-    -   [ ] Commit: `Implement add function in Notification repository.`
-    -   [ ] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [X] Commit: `Create Notification model struct.`
+    -   [X] Commit: `Create SubscriberRequest model struct.`
+    -   [X] Commit: `Create Notification database and Notification repository struct skeleton.`
+    -   [X] Commit: `Implement add function in Notification repository.`
+    -   [X] Commit: `Implement list_all_as_string function in Notification repository.`
+    -   [X] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -85,5 +85,10 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+
+1. Kita menggunakan `RwLock<>` karena data `Vec<Notification>` bersifat *read-heavy*—lebih sering dibaca dibanding diubah. `RwLock` memungkinkan banyak thread membaca data secara paralel (concurrent), tapi hanya mengunci penuh saat ada thread yang menulis. Ini jauh lebih efisien dibanding `Mutex`, yang mengunci akses bahkan saat hanya ingin membaca. Jadi, `RwLock` adalah solusi optimal untuk performa dan thread safety dalam konteks ini.
+
+2. Di Rust, mutasi terhadap static variable tidak diizinkan secara langsung karena bisa menyebabkan *data race* dalam lingkungan multithreading. Ini berbeda dengan Java, yang mengizinkan mutasi static variable tanpa perlindungan eksplisit. Rust menekankan safety — jadi untuk membuat variable global yang bisa diakses dan dimodifikasi, kita perlu memakai `lazy_static` untuk inisialisasi, dan bungkus dengan struktur seperti `RwLock`, `Mutex`, atau `DashMap`. Ini menjamin bahwa setiap akses/modifikasi aman dari race condition dan sesuai dengan sistem ownership Rust.
+
 
 #### Reflection Subscriber-2
