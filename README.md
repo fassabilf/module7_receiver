@@ -68,16 +68,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [X] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [X] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [X] Commit: `Create Notification service struct skeleton.`
+    -   [X] Commit: `Implement subscribe function in Notification service.`
+    -   [X] Commit: `Implement subscribe function in Notification controller.`
+    -   [X] Commit: `Implement unsubscribe function in Notification service.`
+    -   [X] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [X] Commit: `Implement receive_notification function in Notification service.`
+    -   [X] Commit: `Implement receive function in Notification controller.`
+    -   [X] Commit: `Implement list_messages function in Notification service.`
+    -   [X] Commit: `Implement list function in Notification controller.`
+    -   [X] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -92,3 +92,15 @@ This is the place for you to write reflections:
 
 
 #### Reflection Subscriber-2
+
+1. **Have you explored things outside of the steps in the tutorial, for example: `src/lib.rs`?**
+
+   Ya, aku sempat eksplor bagian `src/lib.rs` karena penasaran gimana konfigurasi aplikasi diatur. Dari situ, aku belajar bahwa file ini berisi konfigurasi global seperti `APP_CONFIG` dan `REQWEST_CLIENT` yang bisa digunakan oleh semua module. `APP_CONFIG` ternyata mengambil nilai dari file `.env` dengan bantuan `dotenv` dan `Figment`, dan itu sangat penting untuk nyambungin Publisher ke Receiver secara dinamis. Jadi, bagian ini krusial walau jarang disinggung dalam tutorialnya.
+
+2. **Sejak berhasil menjalankan beberapa Receiver, bagaimana Observer pattern membantu penambahan subscriber baru? Dan bagaimana kalau kita jalankan banyak Main app?**
+
+   Observer pattern sangat memudahkan penambahan subscriber karena arsitekturnya memang dirancang untuk dinamis. Kita cukup menjalankan instance baru dari Receiver dan mengirimkan request subscribe ke Main App, dan sistem langsung bisa mengirim notifikasi ke instance baru tersebut tanpa ubah code apa pun. Tapi kalau kita jalankan lebih dari satu Main App, akan muncul masalah baru, karena list subscriber disimpan secara lokal di memory Main App. Jadi perlu solusi tambahan seperti shared database atau message broker supaya bisa tetap sinkron antar instance Main App.
+
+3. **Sudah coba buat test sendiri atau eksplor dokumentasi Postman collection?**
+
+   Iya, aku sempat coba buat koleksi baru di Postman untuk test berbagai skenario seperti subscribe ganda, unsubscribe, dan notifikasi ke banyak Receiver sekaligus. Fitur paling berguna menurutku adalah Postman **Environment Variables**, karena kita bisa set URL dasar `localhost:8001`, `8002`, dll dan ganti-ganti dengan cepat. Fitur **Test Script** juga menarik buat otomatisasi cek response, dan mungkin bisa berguna banget kalau dipakai untuk project kelompok nanti biar semua anggota tim bisa testing dengan cara yang sama.
